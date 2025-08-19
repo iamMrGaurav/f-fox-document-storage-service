@@ -1,8 +1,8 @@
 package ai.freightfox.doc.storage.service.demo.service;
 
-
 import ai.freightfox.doc.storage.service.demo.dto.FileMetadataResponse;
 import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.BadRequestException;
+import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.FileSearchException;
 import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.FileUploadException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class StorageService {
     public List<FileMetadataResponse> searchFiles(String userName, String searchTerm, int page, int size){
         try {
             if (userName == null || userName.trim().isEmpty()) {
-                throw new IllegalArgumentException("Username cannot be null or empty");
+                throw new BadRequestException("Username cannot be null or empty");
             }
             
             String prefix = userName + "/";
@@ -70,7 +70,7 @@ public class StorageService {
             
         } catch (Exception e) {
             log.error("Error searching files for user {} with term {}: {}", userName, searchTerm, e.getMessage());
-            throw new RuntimeException("Failed to search files", e);
+            throw new FileSearchException("Failed to search files");
         }
     }
 
@@ -83,14 +83,6 @@ public class StorageService {
                 .fileSize(s3Object.size())
                 .lastModified(s3Object.lastModified())
                 .build();
-    }
-
-    private String extractFileNameFromKey(String key) {
-        return key.substring(key.lastIndexOf("/") + 1);
-    }
-
-    private String buildFileKey(String userName, String fileName) {
-        return userName + "/" + fileName;
     }
 
     public FileMetadataResponse uploadFile(String userName, MultipartFile file)  {
@@ -178,8 +170,7 @@ public class StorageService {
             }
 
             String key = buildFileKey(userName, fileName);
-            
-            // Check if file exists before attempting to delete
+
             if (!fileExists(key)) {
                 throw new BadRequestException("File not found: " + fileName);
             }
@@ -215,6 +206,14 @@ public class StorageService {
             log.error("Error checking file existence for key {}: {}", fileKey, e.getMessage());
             return false;
         }
+    }
+
+    private String extractFileNameFromKey(String key) {
+        return key.substring(key.lastIndexOf("/") + 1);
+    }
+
+    private String buildFileKey(String userName, String fileName) {
+        return userName + "/" + fileName;
     }
 
 }
