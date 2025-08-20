@@ -1,4 +1,4 @@
-package ai.freightfox.doc.storage.service.demo.dto;
+package ai.freightfox.doc.storage.service.demo.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

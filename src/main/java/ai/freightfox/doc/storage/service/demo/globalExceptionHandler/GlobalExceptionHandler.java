@@ -1,6 +1,9 @@
 package ai.freightfox.doc.storage.service.demo.globalExceptionHandler;
 
-import ai.freightfox.doc.storage.service.demo.dto.ApiErrorResponse;
+import ai.freightfox.doc.storage.service.demo.dto.response.ApiErrorResponse;
+import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.exceptionHandlers.BadRequestException;
+import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.exceptionHandlers.FileSearchException;
+import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.exceptionHandlers.FileUploadException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

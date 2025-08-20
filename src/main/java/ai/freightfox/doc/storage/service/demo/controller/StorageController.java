@@ -1,8 +1,8 @@
 package ai.freightfox.doc.storage.service.demo.controller;
 
-import ai.freightfox.doc.storage.service.demo.dto.ApiSuccessResponse;
-import ai.freightfox.doc.storage.service.demo.dto.FileMetadataResponse;
-import ai.freightfox.doc.storage.service.demo.dto.SearchResponse;
+import ai.freightfox.doc.storage.service.demo.dto.response.ApiSuccessResponse;
+import ai.freightfox.doc.storage.service.demo.dto.response.FileMetadataResponse;
+import ai.freightfox.doc.storage.service.demo.dto.response.SearchResponse;
 import ai.freightfox.doc.storage.service.demo.service.StorageService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
