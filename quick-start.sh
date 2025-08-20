@@ -146,7 +146,7 @@ run_with_docker() {
         print_status "Container is running successfully"
         
         # Test health endpoint
-        if curl -s http://localhost:$APP_PORT/api/freight-fox/s3-bucket/search?userName=healthcheck >/dev/null; then
+        if curl -s http://localhost:$APP_PORT/api/freight-fox/s3-bucket/health >/dev/null; then
             print_status "Application health check passed"
         else
             print_warning "Application may still be starting..."
@@ -218,7 +218,7 @@ run_with_java() {
     attempt=1
     
     while [ $attempt -le $max_attempts ]; do
-        if curl -s http://localhost:$APP_PORT/api/freight-fox/s3-bucket/search?userName=healthcheck >/dev/null; then
+        if curl -s http://localhost:$APP_PORT/api/freight-fox/s3-bucket/health >/dev/null; then
             print_status "Application started successfully"
             break
         else
@@ -246,7 +246,7 @@ show_final_info() {
     echo "=================="
     echo "Main API: http://localhost:$APP_PORT"
     echo "Swagger UI: http://localhost:$APP_PORT/swagger-ui/html"
-    echo "Health Check: http://localhost:$APP_PORT/api/freight-fox/s3-bucket/search?userName=healthcheck"
+    echo "Health Check: http://localhost:$APP_PORT/api/freight-fox/s3-bucket/health"
     echo ""
     echo "Configuration:"
     echo "=============="
