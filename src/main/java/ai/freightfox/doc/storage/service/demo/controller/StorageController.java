@@ -23,7 +23,7 @@ public class StorageController {
     @Autowired
     private StorageService storageService;
 
-    @Operation(summary = "Search By File Name")
+    @Operation(summary = "Search Files by Username and Filename")
     @GetMapping("/search")
     public ResponseEntity<SearchResponse> searchFiles(
             @RequestParam @NotBlank(message = "Username is required") String userName, 
