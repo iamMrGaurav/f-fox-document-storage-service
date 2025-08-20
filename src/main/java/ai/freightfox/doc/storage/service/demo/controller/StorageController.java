@@ -69,4 +69,11 @@ public class StorageController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Health Check")
+    @GetMapping("/health")
+    public ResponseEntity<ApiSuccessResponse> healthCheck() {
+        ApiSuccessResponse response = new ApiSuccessResponse("Service is running");
+        return ResponseEntity.ok(response);
+    }
+
 }

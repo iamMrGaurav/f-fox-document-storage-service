@@ -104,14 +104,13 @@ Access Swagger UI at: `http://localhost:8080/swagger-ui.html`
 |--------|----------|-------------|
 | POST | `/api/freight-fox/s3-bucket/upload` | Upload document |
 | GET | `/api/freight-fox/s3-bucket/search` | Search documents |
-| GET | `/api/freight-fox/s3-bucket/list` | List all documents |
-| GET | `/api/freight-fox/s3-bucket/download/{fileName}` | Download document |
-| DELETE | `/api/freight-fox/s3-bucket/delete/{fileName}` | Delete document |
+| GET | `/api/freight-fox/s3-bucket/search/files` | List all user documents |
+| DELETE | `/api/freight-fox/s3-bucket/delete` | Delete document |
 
 ### Health Check
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/freight-fox/s3-bucket/search?userName=healthcheck` | Health check |
+| GET | `/api/freight-fox/s3-bucket/health` | Health check |
 
 ## Usage Examples
 
@@ -139,7 +138,12 @@ curl "http://localhost:8080/api/freight-fox/s3-bucket/download/document.pdf?user
 
 ### Delete Document
 ```bash
-curl -X DELETE "http://localhost:8080/api/freight-fox/s3-bucket/delete/document.pdf?userName=john.doe"
+curl -X DELETE "http://localhost:8080/api/freight-fox/s3-bucket/delete?userName=john.doe&fileName=document.pdf"
+```
+
+### Health Check
+```bash
+curl "http://localhost:8080/api/freight-fox/s3-bucket/health"
 ```
 
 ## Configuration
