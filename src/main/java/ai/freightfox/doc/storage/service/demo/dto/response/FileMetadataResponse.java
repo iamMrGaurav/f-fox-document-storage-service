@@ -1,4 +1,4 @@
-package ai.freightfox.doc.storage.service.demo.dto;
+package ai.freightfox.doc.storage.service.demo.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

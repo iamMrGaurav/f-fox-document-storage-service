@@ -20,6 +20,44 @@ A Spring Boot REST API service for managing document storage using AWS S3 with c
 - AWS Account with S3 bucket
 - AWS CLI configured (optional)
 
+### S3 Bucket Requirement
+
+You must create an S3 bucket before running the application. The bucket name should follow this format:
+```
+freight-fox-doc-storage
+```
+
+Example:
+```
+freight-fox-doc-storage
+```
+
+Create the bucket using AWS CLI:
+```bash
+aws s3 mb s3://freight-fox-doc-storage --region ap-south-1
+```
+
+Or create it through the AWS Console in the ap-south-1 region.
+
+## Quick Start (Recommended)
+
+### One-Command Setup
+```bash
+# Download and run the quick-start script
+curl -sSL https://raw.githubusercontent.com/your-repo/f-fox-doc-storage-service/main/quick-start.sh | bash
+
+# Or if you have the repository:
+./quick-start.sh
+```
+
+### Docker Only (Super Quick)
+```bash
+# Just Docker with AWS credentials
+./docker-run.sh
+```
+
+**Note:** Both scripts will ask for your S3 bucket name. Make sure you have created the S3 bucket first as mentioned in the prerequisites.
+
 ## Local Development Setup
 
 ### 1. Clone and Setup

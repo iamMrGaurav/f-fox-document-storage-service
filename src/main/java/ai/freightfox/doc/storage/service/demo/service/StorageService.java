@@ -1,9 +1,9 @@
 package ai.freightfox.doc.storage.service.demo.service;
 
-import ai.freightfox.doc.storage.service.demo.dto.FileMetadataResponse;
-import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.BadRequestException;
-import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.FileSearchException;
-import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.FileUploadException;
+import ai.freightfox.doc.storage.service.demo.dto.response.FileMetadataResponse;
+import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.exceptionHandlers.BadRequestException;
+import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.exceptionHandlers.FileSearchException;
+import ai.freightfox.doc.storage.service.demo.globalExceptionHandler.exceptionHandlers.FileUploadException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
