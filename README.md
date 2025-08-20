@@ -28,6 +28,8 @@ Make sure your AWS credentials have the following S3 permissions for the bucket:
 - `s3:DeleteObject`
 - `s3:ListBucket`
 
+## PostMan Collection
+- [API-COLLECTION] (https://github.com/iamMrGaurav/f-fox-document-storage-service/blob/main/FreightFox-Document-Storage-API.postman_collection.json)
 
 ## Quick Start (Recommended)
 
