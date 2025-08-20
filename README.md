@@ -3,7 +3,7 @@
 ## Features
 
 - Upload documents to AWS S3
-- Search documents by user and metadata
+- Search documents by user and filename
 - List documents with pagination
 - Download documents with presigned URLs
 - Delete documents
@@ -103,7 +103,7 @@ Access Swagger UI at: `http://localhost:8080/swagger-ui.html`
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/freight-fox/s3-bucket/upload` | Upload document |
-| GET | `/api/freight-fox/s3-bucket/search` | Search documents |
+| GET | `/api/freight-fox/s3-bucket/search` | Search documents by filename |
 | GET | `/api/freight-fox/s3-bucket/search/files` | List all user documents |
 | DELETE | `/api/freight-fox/s3-bucket/delete` | Delete document |
 
