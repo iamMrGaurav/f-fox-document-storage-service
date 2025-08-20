@@ -22,22 +22,18 @@ A Spring Boot REST API service for managing document storage using AWS S3 with c
 
 ### S3 Bucket Requirement
 
-You must create an S3 bucket before running the application. The bucket name should follow this format:
-```
-freight-fox-doc-storage
-```
+You must create an S3 bucket before running the application. Create a bucket with any name you prefer (example: `freight-fox-doc-storage`) in the `ap-south-1` region through the AWS Console or AWS CLI.
 
-Example:
-```
-freight-fox-doc-storage
-```
+Make sure your AWS credentials have the following S3 permissions for the bucket:
+- `s3:GetObject`
+- `s3:PutObject`
+- `s3:DeleteObject`
+- `s3:ListBucket`
 
-Create the bucket using AWS CLI:
+Example bucket creation:
 ```bash
 aws s3 mb s3://freight-fox-doc-storage --region ap-south-1
 ```
-
-Or create it through the AWS Console in the ap-south-1 region.
 
 ## Quick Start (Recommended)
 
@@ -69,14 +65,7 @@ cd f-fox-doc-storage-service
 
 ### 2. Configure AWS S3
 
-#### Option A: Using AWS CLI (Recommended)
-```bash
-# Install AWS CLI
-# Configure with your credentials
-aws configure
-```
-
-#### Option B: Environment Variables
+#### Option A: Environment Variables
 ```bash
 export AWS_ACCESS_KEY=your-access-key
 export AWS_SECRET_KEY=your-secret-key
@@ -84,7 +73,7 @@ export AWS_REGION=ap-south-1
 export S3_BUCKET_NAME=your-bucket-name
 ```
 
-#### Option C: Update application.properties
+#### Option B: Update application.properties
 ```properties
 # Edit src/main/resources/application.properties
 aws.access.key=your-access-key
@@ -161,7 +150,11 @@ curl -X POST "http://localhost:8080/api/freight-fox/s3-bucket/upload" \
 
 ### Search Documents
 ```bash
+# Search by username only
 curl "http://localhost:8080/api/freight-fox/s3-bucket/search?userName=john.doe&page=0&size=10"
+
+# Search by username and search term
+curl "http://localhost:8080/api/freight-fox/s3-bucket/search?userName=john.doe&searchTerm=invoice&page=0&size=10"
 ```
 
 ### Download Document
@@ -228,7 +221,7 @@ docker build -t freight-fox-docs .
 # Build image
 docker build -t freight-fox-docs .
 
-# Run container
+# Run container (replace with your actual AWS credentials and S3 bucket name)
 docker run -p 8080:8080 \
   -e AWS_ACCESS_KEY=your-access-key \
   -e AWS_SECRET_KEY=your-secret-key \
