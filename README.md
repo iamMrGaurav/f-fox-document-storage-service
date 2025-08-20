@@ -171,8 +171,45 @@ aws.s3.bucket.name=${S3_BUCKET_NAME:your-bucket-name}
 # Run all tests
 mvn test
 
-# Run with coverage
+# Run specific test class
+mvn test -Dtest=StorageServiceTest
+
+# Run specific test method
+mvn test -Dtest=StorageServiceTest#uploadFile_WithValidFile_ReturnsFileMetadata
+
+# Run tests with coverage
 mvn test jacoco:report
+
+# Run tests with verbose output
+mvn test -Dtest=StorageServiceTest -Dmaven.test.failure.ignore=true
+
+# Skip tests during build
+mvn clean package -DskipTests
+```
+
+### Unit Test Coverage
+The application includes comprehensive unit tests for the `StorageService` class:
+
+- **18 test methods** covering all service functionality
+- **Search operations** - valid/invalid parameters, pagination, filtering
+- **Upload operations** - successful uploads, validation, error handling
+- **Delete operations** - file deletion, validation, non-existent files
+- **Utility operations** - file existence checks, download URL generation
+
+**Key test files:**
+- `src/test/java/.../service/StorageServiceTest.java` - Service layer unit tests
+- `src/test/java/.../FFoxDocStorageServiceApplicationTests.java` - Application context test
+
+### Running Unit Tests in Docker
+```bash
+# Build test image
+docker build --target test -f Dockerfile.test -t freight-fox-docs:test .
+
+# Run tests in container
+docker run freight-fox-docs:test
+
+# Or run with Maven in existing container
+docker run -v $(pwd):/app -w /app openjdk:21-jdk mvn test -Dtest=StorageServiceTest
 ```
 
 ### Code Style

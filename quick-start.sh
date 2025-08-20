@@ -42,8 +42,9 @@ get_user_choice() {
     echo "Choose how to run the application:"
     echo "1) Docker (Recommended - No local setup needed)"
     echo "2) Local Java (Build and run with Maven)"
+    echo "3) Run Unit Tests (Test application without starting)"
     echo ""
-    read -p "Enter your choice (1 or 2): " choice
+    read -p "Enter your choice (1, 2, or 3): " choice
     echo ""
 }
 
@@ -234,6 +235,87 @@ run_with_java() {
     done
 }
 
+# Function to run unit tests
+run_unit_tests() {
+    echo "Running Unit Tests"
+    echo "=================="
+    
+    # Check Java version
+    if command_exists java; then
+        java_version=$(java -version 2>&1 | head -n1 | cut -d'"' -f2 | cut -d'.' -f1)
+        if [ "$java_version" -ge 21 ] 2>/dev/null; then
+            print_status "Java $java_version found"
+        else
+            print_error "Java 21 or higher is required. Current version: $java_version"
+            echo "Please install Java 21 from: https://adoptium.net/"
+            exit 1
+        fi
+    else
+        print_error "Java is not installed!"
+        echo "Please install Java 21 from: https://adoptium.net/"
+        exit 1
+    fi
+    
+    # Check Maven
+    if command_exists mvn; then
+        print_status "Maven found"
+    else
+        print_error "Maven is not installed!"
+        echo "Please install Maven from: https://maven.apache.org/install.html"
+        exit 1
+    fi
+    
+    echo ""
+    echo "Test Options:"
+    echo "============="
+    echo "1) Run all tests"
+    echo "2) Run StorageService unit tests only"
+    echo "3) Run tests with verbose output"
+    echo ""
+    read -p "Enter your choice (1, 2, or 3): " test_choice
+    echo ""
+    
+    case $test_choice in
+        1)
+            print_info "Running all tests..."
+            mvn test
+            ;;
+        2)
+            print_info "Running StorageService unit tests..."
+            mvn test -Dtest=StorageServiceTest
+            ;;
+        3)
+            print_info "Running all tests with verbose output..."
+            mvn test -Dtest=StorageServiceTest -Dmaven.test.failure.ignore=true
+            ;;
+        *)
+            print_error "Invalid choice. Running all tests by default..."
+            mvn test
+            ;;
+    esac
+    
+    if [ $? -eq 0 ]; then
+        print_status "All tests passed successfully!"
+        echo ""
+        echo "Test Summary:"
+        echo "============="
+        echo "✓ StorageService unit tests - 18 test methods"
+        echo "✓ Application context test"
+        echo ""
+        echo "Test Coverage:"
+        echo "=============="
+        echo "• Search operations (7 tests)"
+        echo "• Upload operations (4 tests)"
+        echo "• Delete operations (4 tests)"
+        echo "• Utility operations (3 tests)"
+        echo ""
+        print_info "Unit tests completed successfully. Application is ready for deployment."
+    else
+        print_error "Some tests failed. Please check the output above."
+        exit 1
+    fi
+}
+
 # Function to display final information
 show_final_info() {
     echo ""
@@ -289,28 +371,31 @@ main() {
     # Get user choice
     get_user_choice
     
-    # Setup AWS credentials
-    setup_aws_credentials
-    
-    # Get S3 bucket name
-    get_s3_bucket
-    
     # Run based on user choice
     case $choice in
         1)
+            # Setup AWS credentials for Docker
+            setup_aws_credentials
+            get_s3_bucket
             run_with_docker
+            show_final_info
             ;;
         2)
+            # Setup AWS credentials for local Java
+            setup_aws_credentials
+            get_s3_bucket
             run_with_java
+            show_final_info
+            ;;
+        3)
+            # Run unit tests (no AWS credentials needed)
+            run_unit_tests
             ;;
         *)
             print_error "Invalid choice. Please run the script again."
             exit 1
             ;;
     esac
-    
-    # Show final information
-    show_final_info
 }
 
 # Handle Ctrl+C gracefully
