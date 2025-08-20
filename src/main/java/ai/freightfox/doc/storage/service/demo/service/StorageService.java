@@ -26,6 +26,9 @@ public class StorageService {
 
     @Autowired
     private S3Client s3Client;
+    
+    @Autowired
+    private S3Presigner s3Presigner;
 
     @Value("${aws.s3.bucket.name}")
     private String s3BucketName;
@@ -134,10 +137,8 @@ public class StorageService {
                     .getObjectRequest(getObjectRequest)
                     .build();
 
-            try (S3Presigner presigner = S3Presigner.create()) {
-                PresignedGetObjectRequest presignedRequest = presigner.presignGetObject(presignRequest);
-                return presignedRequest.url().toString();
-            }
+            PresignedGetObjectRequest presignedRequest = s3Presigner.presignGetObject(presignRequest);
+            return presignedRequest.url().toString();
         } catch (Exception e) {
             log.error("Error generating download URL for file {}: {}", fileKey, e.getMessage());
             throw new RuntimeException("Failed to generate download URL", e);
