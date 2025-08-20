@@ -1,6 +1,4 @@
-# FreightFox Document Storage Service
-
-A Spring Boot REST API service for managing document storage using AWS S3 with comprehensive search capabilities.
+# F-Fox Document Storage Service
 
 ## Features
 
@@ -30,10 +28,6 @@ Make sure your AWS credentials have the following S3 permissions for the bucket:
 - `s3:DeleteObject`
 - `s3:ListBucket`
 
-Example bucket creation:
-```bash
-aws s3 mb s3://freight-fox-doc-storage --region ap-south-1
-```
 
 ## Quick Start (Recommended)
 
@@ -82,27 +76,8 @@ aws.s3.region=ap-south-1
 aws.s3.bucket.name=your-bucket-name
 ```
 
-### 3. Create S3 Bucket
 
-```bash
-# Create bucket (replace with your bucket name)
-aws s3 mb s3://your-bucket-name --region ap-south-1
-
-# Set bucket policy for public read (optional)
-aws s3api put-bucket-policy --bucket your-bucket-name --policy '{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::your-bucket-name/*"
-    }
-  ]
-}'
-```
-
-### 4. Build and Run
+### 3. Build and Run
 
 ```bash
 # Build the application
@@ -119,7 +94,7 @@ The application will start on `http://localhost:8080`
 
 ### 5. API Documentation
 
-Access Swagger UI at: `http://localhost:8080/swagger-ui/html`
+Access Swagger UI at: `http://localhost:8080/swagger-ui.html`
 
 ## API Endpoints
 
@@ -229,44 +204,3 @@ docker run -p 8080:8080 \
   -e S3_BUCKET_NAME=your-bucket-name \
   freight-fox-docs
 ```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **S3 Access Denied**
-   - Verify AWS credentials
-   - Check bucket permissions
-   - Ensure bucket exists in correct region
-
-2. **Application Won't Start**
-   - Check Java version (requires Java 21+)
-   - Verify all required environment variables
-   - Check port 8080 availability
-
-3. **File Upload Fails**
-   - Check file size limits (default 50MB)
-   - Verify S3 bucket write permissions
-   - Check network connectivity to AWS
-
-### Logs
-```bash
-# View application logs
-tail -f logs/application.log
-
-# Enable debug logging
-export LOGGING_LEVEL_ROOT=DEBUG
-mvn spring-boot:run
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
