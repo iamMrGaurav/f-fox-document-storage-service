@@ -19,7 +19,6 @@ echo ""
 
 # Get S3 bucket name
 echo "Please provide your S3 bucket name:"
-echo "Format: freight-fox-doc-storage"
 echo "Example: freight-fox-doc-storage"
 read -p "S3 Bucket Name: " S3_BUCKET_NAME
 

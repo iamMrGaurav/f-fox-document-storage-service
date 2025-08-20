@@ -79,7 +79,6 @@ get_s3_bucket() {
     echo "======================="
     
     echo "Please provide your S3 bucket name:"
-    echo "Format: freight-fox-doc-storage"
     echo "Example: freight-fox-doc-storage"
     read -p "S3 Bucket Name: " s3_bucket_name
     
@@ -262,8 +261,11 @@ show_final_info() {
     echo "  -F \"file=@your-file.pdf\" \\"
     echo "  -F \"userName=test-user\""
     echo ""
-    echo "# Search files"
+    echo "# Search files by username"
     echo "curl \"http://localhost:$APP_PORT/api/freight-fox/s3-bucket/search?userName=test-user\""
+    echo ""
+    echo "# Search files by username and search term"
+    echo "curl \"http://localhost:$APP_PORT/api/freight-fox/s3-bucket/search?userName=test-user&searchTerm=document\""
     echo ""
     if [ "$choice" = "1" ]; then
         echo "Docker Management:"
